@@ -1,0 +1,55 @@
+.sales{
+    margin: 4% 0;
+    overflow: hidden;
+}
+.sales-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.sales-item{
+    margin: 0 .5em;
+    height: auto;
+    width: calc(100%/3);
+}
+
+
+.sales-item img{
+    width: 100%;
+    height: 70%;
+}
+
+@media (max-width: 1024px) {
+    .sales-item:last-child {
+        display: none;
+    }
+    
+    .sales-container {
+        justify-content: space-around;
+    }
+    
+    .sales-item {
+        width: calc(50% - 1em); /* Учитываем отступы */
+        margin: 0.5em;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .sales-item:not(:first-child) {
+        display: none;
+    }
+    
+    .sales-container {
+        justify-content: center;
+    }
+    
+    .sales-item {
+        width: 90%;
+        margin: 0 auto;
+        padding-bottom: 20px;
+    }
+
+}

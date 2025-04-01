@@ -1,0 +1,13 @@
+main{
+    margin: 0 ;
+}
+
+.nav-link{
+    color: rgb(129, 104, 240) !important;
+    font-weight: 450;
+}
+
+.nav-link:hover{
+    color: rgb(47, 0, 255) !important;
+
+}

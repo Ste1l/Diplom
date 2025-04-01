@@ -1,0 +1,77 @@
+.input-no-styles {
+    all: unset;
+}
+
+.bg-custom-purple{
+    --bs-purple-rgb: 80, 50, 230;
+    --bs-border-opacity: 1;
+    background-color: rgba(var(--bs-purple-rgb), var(--bs-border-opacity)) !important;
+}
+
+.custom-purple{
+    --bs-purple-rgb: 80, 50, 230;
+    --bs-border-opacity: 1;
+    color: rgba(var(--bs-purple-rgb), var(--bs-border-opacity)) !important;
+}
+
+.border-purple {
+    border: 1px;
+    --bs-purple-rgb: 109, 85, 230;
+    --bs-border-opacity: 1;
+    border-color: rgba(var(--bs-purple-rgb), var(--bs-border-opacity)) !important;
+
+}
+
+.border-purple:active {
+    --bs-purple-rgb-active: 80, 50, 230;
+    --bs-border-opacity: 1;
+    border-color: rgba(var(--bs-purple-rgb-active), var(--bs-border-opacity)) !important;
+}
+
+/* Header */
+
+.header{
+    box-shadow: 0 4px 20px -2px rgba(109, 85, 230, 1);    
+}
+
+.counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+    font-weight: 400;
+    background-color: rgba(80, 50, 230, 1);
+    position: absolute;
+    border-radius: 50%;
+    top: -5px;
+    right: -2px;
+}
+
+
+.logo {
+    margin: 0 20px;
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.hover-item, .hover-item svg, .hover-item p {
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.hover-item:hover, .hover-item:hover svg, .hover-item:hover p {
+    color: rgba(80, 50, 230, 1)
+}
+
+.hover-item .card-img-top, .hover-item .card-img {
+    transition: filter 0.3s ease-in-out;
+}
+
+.hover-item:hover .card-img-top, .hover-item:hover .card-img {
+    filter: brightness(30%);
+}

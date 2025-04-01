@@ -1,0 +1,94 @@
+.profile-container {
+    max-width: 70%;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(129, 104, 240, 0.5);
+  }
+  
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .logout-button {
+    color: rgba(0, 0, 0, 1);
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-item {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  hr{
+    margin-top: 0;
+  }
+  
+  .info-label {
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .info-value {
+    color: #444;
+  }
+
+  .buttons_link_profile{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buttons_link_profile .custom-link{
+    border: 2px solid rgba(129, 104, 240, 1);
+    border-radius: 8px;
+    margin: 5px 0;
+    padding-left: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+
+  .buttons_link_profile .custom-link:hover{
+    background-color: rgba(129, 104, 240, 1);
+    color: white;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .profile-header {
+      flex-direction: flex;
+      justify-content: space-between;
+    }
+  
+    .info-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .info-label {
+      margin-bottom: 5px;
+    }
+  }

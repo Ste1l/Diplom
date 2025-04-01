@@ -1,0 +1,356 @@
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 10px;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    height: 60px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+}
+
+.header-content {
+    width: calc(100% - 25%);
+    margin: 0 auto;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+
+.logo {
+    margin: 0 20px;
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    height: 50px;
+    border: 2px solid rgb(129, 104, 240);
+    border-radius: 50px;
+    margin-right: 20px;
+    background-color: white;
+}
+
+.search input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    padding-left: 15px;
+    font-size: 17px;
+    font-family: "Roboto", sans-serif;
+}
+
+.search button {
+    background: rgb(129, 104, 240);
+    width: 54px;
+    height: 100%;
+    fill: white;
+    border: none;
+    border-radius: 50px 50px 50px 50px;
+    cursor: pointer;
+}
+
+.user {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.user li {
+    text-align: center;
+    padding: 0 10px;
+}
+
+.user li {
+    display: block;
+    margin: 0 auto;
+}
+
+.user li button, .user-mobile li button {
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    color: inherit;
+}
+
+.icon{
+    display: block;
+    margin: 0 auto;
+}
+
+.icon-mobile svg{
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+.text-mobile{
+    font-size: 20px;
+}
+
+.user-item-mobile{
+    display: flex;
+    align-items: center;
+}
+
+
+
+.menu-container {
+    display: none;
+    position: absolute;
+    right: 0;
+}
+
+.search-mobile,
+.menu-open-button,
+.menu-close-button {
+    margin-right: 10px;
+}
+
+.search-mobile {
+    display: block;
+    color: rgb(129, 104, 240);
+    background-color: white;
+    border: none;
+}
+
+.menu-open-button,
+.menu-close-button {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    color: rgb(129, 104, 240);
+}
+
+
+.search_mobile_div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: white; */
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.search_mobile_div.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.search_mobile_form {
+    margin: 15px;
+    margin-top: 10px;
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    height: 50px;
+    border: 2px solid rgb(129, 104, 240);
+    border-radius: 50px;
+    background-color: white;
+}
+
+.search_mobile_form input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    padding-left: 15px;
+    font-size: 17px;
+    font-family: "Roboto", sans-serif;
+
+}
+
+.search_mobile_form button {
+    background: rgb(129, 104, 240);
+    width: 54px;
+    height: 100%;
+    fill: white;
+    border: none;
+    border-radius: 50px 50px 50px 50px;
+    cursor: pointer;
+}
+
+/* .menu-mobile {
+    position: fixed;
+    top: 60px;
+    height: auto;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+
+
+.menu-mobile.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.menu-mobile ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-mobile li {
+    margin-bottom: 20px;
+    font-size: 18px;
+} */
+
+.user-profile {
+    position: relative;
+    display: inline-block;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.user-profile:hover .user-dropdown,
+.user-dropdown:focus-within {
+    display: block;
+}
+
+.user-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-dropdown li {
+    width: 5vw;
+    height: 3vh;
+    padding: 5px;
+    border: 1px #ddd;
+    border-radius: 5px;
+}
+
+.user-dropdown li:hover{
+    background-color: rgba(129, 104, 240,0.6);
+    color: white;
+}
+
+
+.user-menu{
+    position: absolute;
+}
+
+.quantityCart{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    margin-top: -25px; 
+    margin-left: -20px;
+    color: white;
+    background-color: rgb(129, 104, 240);
+    border: none;
+    border-radius: 50px;
+    font-size: 12px;
+}
+.color-toggle{
+    color: rgb(129, 104, 240);
+}
+
+@media (max-width: 1024px) {
+    /* Стили для мобильных устройств */
+
+    .menu-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 60%;
+    }
+
+    .user {
+        display: none;
+    }
+
+    .logo {
+        margin: 0;
+        width: 80px;
+        height: 80px;
+        cursor: pointer;
+    }
+
+    .search {
+        display: none;
+    }
+
+    .quantityCart{
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        margin-top: 0; 
+        margin-left: 0;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+    /* Стили для мобильных устройств */
+
+    /* .menu-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 60%;
+    }
+
+    .user {
+        display: none;
+    }
+
+    .logo {
+        margin: 0;
+        width: 150px;
+        height: 50px;
+        cursor: pointer;
+    }
+
+    .search {
+        display: none;
+    } */
+
+
+}

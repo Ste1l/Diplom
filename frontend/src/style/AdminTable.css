@@ -1,0 +1,125 @@
+.table-admin {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 5px solid #fff;
+	border-top: 5px solid #fff;
+	border-bottom: 3px solid #fff;
+	border-collapse: collapse; 
+	outline: 3px solid rgb(129, 104, 240);
+	font-size: 15px;
+	background: #fff!important;
+}
+.table-admin th {
+	font-weight: bold;
+	padding: 7px;
+	background: rgb(129, 104, 240);
+	border: none;
+	text-align: left;
+	font-size: 15px;
+	border-top: 3px solid #fff;
+	border-bottom: 3px solid rgb(129, 104, 240);
+}
+.table-admin td {
+	padding: 7px;
+	border: none;
+	border-top: 3px solid #fff;
+	border-bottom: 3px solid #fff;
+	font-size: 15px;
+    vertical-align: top;
+}
+.table-admin tbody tr:nth-child(even){
+	background: rgba(86, 86, 86, 0.2)!important;
+}
+
+.search-container {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+  }
+  
+  .search-container select, .search-container input {
+	margin-right: 10px;
+	padding: 5px;
+  }
+  
+  .search-container button {
+	margin-right: 10px;
+  }
+
+  .search-container {
+	margin-bottom: 20px;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+  }
+  
+  .search-container select, .search-container input {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+  }
+  
+  .add-button {
+	padding: 5px 10px;
+	border: none;
+	font-size: 17px;
+	border-radius: 4px;
+	background-color: rgb(129, 104, 240);
+	color: white;
+	cursor: pointer;
+  }
+  
+  .add-button:hover {
+	background-color: rgb(81, 47, 236);
+  }
+
+  .reset-button {
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font-family: inherit;
+	font-size: inherit;
+	cursor: pointer;
+  }
+
+  .button-admin-table svg{
+	fill: rgb(129, 104, 240);
+	width: 2em;
+	height: 2em;
+  }
+
+  .button-admin-table svg:hover{
+	fill: rgb(81, 47, 236);
+  }
+
+
+
+  .pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+  }
+  
+  .page-btn {
+	background-color: #fff;
+	border: none;
+	padding: 5px 10px;
+	margin: 0 5px;
+	cursor: pointer;
+  }
+  
+  .page-btn:hover {
+	background-color: rgb(129, 104, 240);
+	color: white;
+  }
+  
+  .active-pagination {
+	background-color: rgb(81, 47, 236);
+	color: white;
+  }
+  
+  .disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+  }

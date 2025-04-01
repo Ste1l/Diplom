@@ -1,0 +1,136 @@
+ .favorites-list{
+    display: grid;
+    margin-top: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    gap: 30px;
+  }
+
+  .text-decoration{
+    text-decoration: none;
+  }
+  
+  .card-favorites{
+    width: 100%; 
+    height: 20vw !important;
+  }
+  
+  .image-wrapper-favorites{
+    height: 10vw;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    mix-blend-mode: multiply;
+  }
+  
+  .image-wrapper-favorites img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+
+  .favorite-but{
+    position: absolute;
+    width: 25px;
+    fill : rgba(1, 1, 1, 0.2);
+    height: 25px;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  .favorite-but:hover{
+    fill : rgba(255, 0, 0, 0.8);
+  }
+  
+  .favorite-but.in-favorites{
+    fill : rgba(255, 0, 0, 1.0);
+  }
+  
+  .buttons-card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+  }
+
+  .button-card{
+    position: absolute;
+    bottom: 10px;
+    width: 90%;
+    background: rgb(129, 104, 240);
+    text-align: center;
+    align-items: center;
+    height: auto;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .button-card:hover {
+    background-color: rgb(77, 104, 240);
+  }
+  
+  .button-card.in-cart {
+    background-color: white;
+    color: black;
+    border: 2px solid rgb(129, 104, 240);
+    cursor: pointer;
+  }
+  
+  .button-card.in-cart:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid rgb(129, 104, 240)
+  }
+
+  
+
+  @media screen and (max-width: 1024px) {
+    .favorites-list {
+      grid-template-columns: repeat(3, 1fr);
+      margin: 0 10px;
+      /*   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    }
+
+    .card-favorites{
+      width: 100%; 
+      height: 40vw !important;
+      font-size: 17px;
+    }
+
+    .image-wrapper-favorites{
+      height: 20vw;
+      overflow: hidden;
+    }
+}
+
+  @media screen and (max-width: 768px){
+    
+    .favorites-list{
+      /* grid-template-columns: repeat(2, 1fr); */
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      margin: 0 10px;
+      margin-top: 30px;
+    }
+
+    .card-favorites{
+      height: 65vw !important;
+      font-size: 12px;
+    }
+    
+    .image-wrapper-favorites{
+      height: 30vw;
+      overflow: hidden;
+    }
+  }
