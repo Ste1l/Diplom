@@ -5,8 +5,7 @@ frontend/node_modules
 backend/venv
 
 # testing
-/coverage
+frontend/coverage
 
 # production
-/build
-
+frontend/build
