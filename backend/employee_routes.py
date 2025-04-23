@@ -15,11 +15,14 @@ from uuid import uuid4
 import uuid
 from datetime import datetime
 from typing import List
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
-from reportlab.lib.enums import TA_LEFT, TA_RIGHT
+from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
 import io
 
 
@@ -267,9 +270,19 @@ async def get_product_info(db: AsyncSession = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
+pdfmetrics.registerFont(TTFont('DejaVu', 'DejaVuSerif.ttf'))
+
+styles = getSampleStyleSheet()
+styles.add(ParagraphStyle(
+    name='Russian',
+    fontName='DejaVu',
+    fontSize=12,
+    leading=14
+))
+    
 class PDFGenerator:
     def __init__(self):
-        self.styles = getSampleStyleSheet()
+        self.styles = styles
         self.width, self.height = letter
         
     def create_order_table(self, orders: List[dict]) -> Table:
@@ -295,7 +308,7 @@ class PDFGenerator:
             ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTNAME', (0, 0), (-1, 0), 'DejaVu'),
             ('FONTSIZE', (0, 0), (-1, 0), 14),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
             ('GRID', (0, 0), (-1, -1), 1, colors.black),
@@ -311,7 +324,7 @@ class PDFGenerator:
         styles = self.styles
         
         # Добавляем заголовок
-        title = Paragraph("Отчет о заказах", styles['Heading1'])
+        title = Paragraph("Отчет о заказах", styles['Russian'])
         elements.append(title)
         
         # Добавляем таблицу
@@ -336,9 +349,10 @@ def create_pdf_report_sales(orders_data: List[dict], start_date: datetime, end_d
                           leftMargin=inch/2, rightMargin=inch/2,
                           topMargin=inch, bottomMargin=inch)
     
-    styles = getSampleStyleSheet()
-    styleN = ParagraphStyle(name='Normal', alignment=TA_LEFT)
-    styleR = ParagraphStyle(name='Right', alignment=TA_RIGHT)
+    styleN = ParagraphStyle(name='Normal', fontName='DejaVu', alignment=TA_LEFT)
+    styleC = ParagraphStyle(name='Normal', fontName='DejaVu', alignment=TA_CENTER)
+    styleR = ParagraphStyle(name='Right', fontName='DejaVu', alignment=TA_RIGHT)
+    styleH = ParagraphStyle(name='Heading', fontName='DejaVu', fontSize=18, leading=22)
     
     elements = []
 
@@ -346,12 +360,12 @@ def create_pdf_report_sales(orders_data: List[dict], start_date: datetime, end_d
     end_date_str = end_date.strftime("%d.%m.%Y")
     
     # Заголовок отчёта
-    header_text = f"Report sales (Отчёт по продажам) с {start_date_str} по {end_date_str}"
-    elements.append(Paragraph(header_text, styles['Heading1']))
+    header_text = f"Отчёт по продажам с {start_date_str} по {end_date_str}"
+    elements.append(Paragraph(header_text, styleH))
     elements.append(Spacer(1, 12))
     
     # Таблица товаров
-    data = [['ProductТовар', 'QuantityКоличество', 'Price Цена за единицу', 'Total priceСумма']]
+    data = [['Товар', 'Количество', 'Цена за единицу', 'Сумма']]
     
     total_quantity = 0
     total_amount = 0
@@ -363,10 +377,10 @@ def create_pdf_report_sales(orders_data: List[dict], start_date: datetime, end_d
             total = price * detail['quantity']
             
             data.append([
-                detail['product'].name,
-                str(detail['quantity']),
-                f"{price:.2f} ₽",
-                f"{total:.2f} ₽"
+                Paragraph(detail['product'].name, styleN),
+                Paragraph(str(detail['quantity']), styleC),
+                Paragraph(f"{price:.2f} ₽", styleC),
+                Paragraph(f"{total:.2f} ₽", styleC)
             ])
             total_quantity += detail['quantity']
             total_amount += total
@@ -375,8 +389,8 @@ def create_pdf_report_sales(orders_data: List[dict], start_date: datetime, end_d
     table = Table(data)
     table_style = TableStyle([
         ('GRID', (0, 0), (-1, -1), 0.5, (0, 0, 0)),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('ALIGN', (1, 0), (-1, -1), 'RIGHT')
+        ('FONTNAME', (0, 0), (-1, 0), 'DejaVu'),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
     ])
     table.setStyle(table_style)
     
@@ -384,8 +398,8 @@ def create_pdf_report_sales(orders_data: List[dict], start_date: datetime, end_d
     elements.append(Spacer(1, 12))
     
     # Итоговые суммы
-    elements.append(Paragraph(f"Itogo kolvoИтого количество: {total_quantity}", styleR))
-    elements.append(Paragraph(f"obchay summa: {total_amount:.2f} ₽", styleR))
+    elements.append(Paragraph(f"Итого количество: {total_quantity}", styleR))
+    elements.append(Paragraph(f"Общая сумма: {total_amount:.2f} ₽", styleR))
     
     doc.build(elements)
     return buffer.getvalue()
@@ -399,9 +413,10 @@ def create_pdf_report_supplies(supplie_data: List[dict], start_date: datetime, e
                           leftMargin=inch/2, rightMargin=inch/2,
                           topMargin=inch, bottomMargin=inch)
     
-    styles = getSampleStyleSheet()
-    styleN = ParagraphStyle(name='Normal', alignment=TA_LEFT)
-    styleR = ParagraphStyle(name='Right', alignment=TA_RIGHT)
+    styleN = ParagraphStyle(name='Normal', fontName='DejaVu', alignment=TA_LEFT)
+    styleC = ParagraphStyle(name='Normal', fontName='DejaVu', alignment=TA_CENTER)
+    styleR = ParagraphStyle(name='Right', fontName='DejaVu', alignment=TA_RIGHT)
+    styleH = ParagraphStyle(name='Heading', fontName='DejaVu', fontSize=18, leading=22)
     
     elements = []
 
@@ -409,27 +424,27 @@ def create_pdf_report_supplies(supplie_data: List[dict], start_date: datetime, e
     end_date_str = end_date.strftime("%d.%m.%Y")
     
     # Заголовок отчёта
-    header_text = f"Report supplies (Отчёт по поставкам) с {start_date_str} по {end_date_str}"
-    elements.append(Paragraph(header_text, styles['Heading1']))
+    header_text = f"Отчёт по поставкам с {start_date_str} по {end_date_str}"
+    elements.append(Paragraph(header_text, styleH))
     elements.append(Spacer(1, 12))
     
     # Таблица товаров
-    data = [['ProductТовар', 'QuantityКоличество', 'Price Цена за единицу', 'Total priceСумма']]
+    data = [['Товар', 'Количество', 'Цена за единицу', 'Сумма']]
     
     total_quantity = 0
     total_amount = 0
     
     # Формирование данных таблицы
     for supply in supplie_data:
-        for detail in supply['order_details']:
+        for detail in supply['supply_items']:
             price = detail['product'].price
             total = price * detail['quantity']
             
             data.append([
-                detail['product'].name,
-                str(detail['quantity']),
-                f"{price:.2f} ₽",
-                f"{total:.2f} ₽"
+                Paragraph(detail['product'].name, styleN),
+                Paragraph(str(detail['quantity']), styleC),
+                Paragraph(f"{price:.2f} ₽", styleC),
+                Paragraph(f"{total:.2f} ₽", styleC)
             ])
             total_quantity += detail['quantity']
             total_amount += total
@@ -438,8 +453,8 @@ def create_pdf_report_supplies(supplie_data: List[dict], start_date: datetime, e
     table = Table(data)
     table_style = TableStyle([
         ('GRID', (0, 0), (-1, -1), 0.5, (0, 0, 0)),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('ALIGN', (1, 0), (-1, -1), 'RIGHT')
+        ('FONTNAME', (0, 0), (-1, 0), 'DejaVu'),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER')
     ])
     table.setStyle(table_style)
     
@@ -447,8 +462,8 @@ def create_pdf_report_supplies(supplie_data: List[dict], start_date: datetime, e
     elements.append(Spacer(1, 12))
     
     # Итоговые суммы
-    elements.append(Paragraph(f"Itogo kolvoИтого количество: {total_quantity}", styleR))
-    elements.append(Paragraph(f"obchay summa: {total_amount:.2f} ₽", styleR))
+    elements.append(Paragraph(f"Итого количество: {total_quantity}", styleR))
+    elements.append(Paragraph(f"Общая сумма: {total_amount:.2f} ₽", styleR))
     
     doc.build(elements)
     return buffer.getvalue()

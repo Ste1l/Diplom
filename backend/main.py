@@ -140,13 +140,6 @@ async def get_products_batch(product_ids: ProductIds, db: AsyncSession = Depends
     products = result.scalars().all()
     return {"products": [ProductBase.from_orm(p).dict() for p in products]}
 
-""" @app.get("/products/search/{q}")
-async def search_products(q: str = Path(..., description="Search query"), db: AsyncSession = Depends(get_db)):
-    stmt = select(Product).where(func.lower(Product.name).like(f"%{q.lower()}%"))
-    result = await db.execute(stmt)
-    products = result.scalars().all()
-    return {"products": [ProductBase.from_orm(p).dict() for p in products]} """
-
 @app.get("/products/search/{q}")
 async def search_products(q: str = Path(..., description="Search query"), db: AsyncSession = Depends(get_db)):
     sort_condition = case(
@@ -466,12 +459,6 @@ async def remove_from_favorites(
     await db.commit()
     
     return {"message": "Товар удален из избранного"}
-
-
-""" @app.post("/orders/{user_id}")
-async def get_user_orders(user_id: int, db: AsyncSession = Depends(get_db)):
-    orders = await db.execute(select(Order).where(Order.user_id == user_id))
-    return {"orders": [item.product_id for item in orders.scalars().all()]} """
 
 @router.get("/orders/{user_id}", response_model=dict[str, List[OrderResponse]])
 async def get_user_orders(user_id: int, db: AsyncSession = Depends(get_db), current_user: User = Depends(get_current_user)):
