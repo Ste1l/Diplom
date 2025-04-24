@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FastAPI",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": ["main:app", "--reload"],
+            "justMyCode": true,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend:${env:PYTHONPATH}"
+            },
+            "python": "${workspaceFolder}/backend/venv/Scripts/python.exe"
+        },
+        {
+            "name": "React",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/frontend",
+            "program": "${workspaceFolder}/frontend/node_modules/react-scripts/bin/react-scripts.js",
+            "args": ["start"],
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Запуск Diplom",
+            "configurations": ["FastAPI", "React"],
+            "stopAll": true
+        }
+    ]
+}

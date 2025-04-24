@@ -1,34 +1,21 @@
-import os
-from fastapi import FastAPI, APIRouter, Depends, HTTPException, status, Body, Path, Response
+from fastapi import FastAPI, APIRouter, Depends, HTTPException, status, Body, Path # type: ignore
 from admin_routes import router as admin_router
 from employee_routes import router1 as employee_router
-from fastapi.responses import JSONResponse
-from fastapi.requests import Request
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, ValidationError
+from fastapi.middleware.cors import CORSMiddleware # type: ignore
+from pydantic import BaseModel, ValidationError # type: ignore
 from models.models import Category, Manufacturer, Product, Role, Supply, SupplyItem, User, ProductInfo, CartItem, Favorite, Order, OrderDetail
 from schemas import ProductBase, ProductResponse, RegisterUserData, LoginData, UserResponse, CartItemCreate, FavoriteCreate, OrderResponse, ResetPasswordRequest
-from config import DB_HOST,DB_PORT,DB_USER,DB_NAME,DB_PASS
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, join, and_, delete, func, case
-""" from sqlalchemy.future import select """
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from sqlalchemy.orm import Session, selectinload
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates  
-from typing import List, Optional, Dict, Any
+from sqlalchemy.ext.asyncio import AsyncSession # type: ignore
+from sqlalchemy import select, join, and_, delete, func, case # type: ignore
+from sqlalchemy.exc import IntegrityError # type: ignore
+from sqlalchemy.orm import Session, selectinload # type: ignore
+from typing import List, Dict, Any
 from datetime import datetime, timedelta
-from auth.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user, oauth2_scheme, invalidate_token, get_current_active_admin
+from auth.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user, oauth2_scheme, get_current_active_admin
 from auth.database import get_db
-from passlib.context import CryptContext
+from passlib.context import CryptContext # type: ignore
 import logging
 from static_config import mount_static
-from reportlab.lib import colors
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 
 
 

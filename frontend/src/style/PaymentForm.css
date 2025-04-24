@@ -32,7 +32,7 @@
     color: #999;
 }
 
-.error-message {
+/* .error-message {
     color: #ff4444;
     font-size: 14px;
     margin-top: 5px;
@@ -44,7 +44,7 @@
 .error-message.visible {
     opacity: 1;
     transform: translateY(0);
-}
+} */
 
 .submit-button {
     width: 100%;

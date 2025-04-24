@@ -1,28 +1,26 @@
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form, Response
-from fastapi.responses import FileResponse
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form, Response # type: ignore
+from sqlalchemy.ext.asyncio import AsyncSession # type: ignore
 from models.models import Category, Manufacturer, ProductInfo, Product, Supply, SupplyItem, Order, OrderDetail
-from schemas import CategoryCreate, ManufacturerCreate, ProductInfoCreate, ProductCreate, SupplyCreate, SupplyItemCreate
+from schemas import CategoryCreate, ManufacturerCreate, ProductInfoCreate, SupplyCreate, SupplyItemCreate
 from auth.database import get_db
-from sqlalchemy import select, insert, update
-from sqlalchemy.orm import selectinload
+from sqlalchemy import select, insert, update # type: ignore
+from sqlalchemy.orm import selectinload # type: ignore
 from static_config import get_upload_folder, check_upload_folder
 import os
 import logging
-from pydantic import BaseModel
-from fastapi.responses import JSONResponse
-from uuid import uuid4
+from pydantic import BaseModel # type: ignore
+from fastapi.responses import JSONResponse # type: ignore
 import uuid
 from datetime import datetime
 from typing import List
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib.pagesizes import letter
-from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import inch
-from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
+from reportlab.pdfbase import pdfmetrics # type: ignore
+from reportlab.pdfbase.ttfonts import TTFont # type: ignore
+from reportlab.lib.pagesizes import letter # type: ignore
+from reportlab.lib import colors # type: ignore
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle # type: ignore
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle # type: ignore
+from reportlab.lib.units import inch # type: ignore
+from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER # type: ignore
 import io
 
 
