@@ -134,6 +134,7 @@ class ManufacturerCreate(BaseModel):
     account_number: str
 
 class ProductInfoCreate(BaseModel):
+    product_id: int
     composition: str
     pharmacological_action: str
     indications: str

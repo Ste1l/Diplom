@@ -120,7 +120,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     // Удаление токена из localStorage
     localStorage.removeItem('token');
-    window.location.reload();
+    window.location.href = "/";
   };
   
 

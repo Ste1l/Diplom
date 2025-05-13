@@ -144,6 +144,7 @@ async def add_supply_items(
 async def create_product_info(product_info: ProductInfoCreate, db: AsyncSession = Depends(get_db)):
     try:
         new_product_info = ProductInfo(
+            product_id = product_info.product_id,
             composition=product_info.composition,
             pharmacological_action=product_info.pharmacological_action,
             indications=product_info.indications,
