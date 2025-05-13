@@ -31,12 +31,12 @@ function App() {
     <Router>
         <AuthProvider>
           <NotificationProvider>
-          <div className="App">
+          <div className="App min-vh-100 d-flex flex-column">
             <div className='container'>
             <Header /> 
             </div>
               
-            <main className='container mt-5 pt-5'>
+            <main className='container mt-5 pt-5 flex-grow-1 mb-5'>
               <Routes>
                 <Route path="/" element={
                   <div>
@@ -58,7 +58,10 @@ function App() {
                 <Route path="/orders" element={<Orders />} />
               </Routes>
             </main>
+            <footer className='container-fluid p-0 mt-auto'>
             <Footer />
+            </footer>
+            
             <NotificationBar/>
           </div>
           </NotificationProvider>
