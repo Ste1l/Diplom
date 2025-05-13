@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
-  const { isAuthenticated, token, user, logout } = useAuth();
+  const { isAuthenticated, token, user, logout, isLoading } = useAuth();
   const { addToCart, removeFromCart, loading, cartItems: cartItemsFromHook } = useAddToCart();
   const navigate = useNavigate();
 
@@ -20,6 +20,8 @@ const Cart = () => {
     console.log('isAuthenticated:', isAuthenticated);
     console.log('token:', token);
     console.log('user:', user); */
+
+    if (isLoading) return;
 
     if (isAuthenticated && token && user && user.id) {
       fetchCartData();

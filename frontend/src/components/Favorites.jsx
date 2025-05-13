@@ -18,17 +18,19 @@ function Favorites() {
     const [loading, setLoading] = useState(false);
     const { addToCart, removeFromCart, cartItems, loading: cartLoading, error: cartError } = useAddToCart();
     const { toggleFavorite, favorites, loading: favoritesLoading, error: favoritesError } = useAddToFavorites();
-    const { isAuthenticated, token, user, logout } = useAuth();
+    const { isAuthenticated, token, user, logout, isLoading } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (isLoading) return;
+
         if (isAuthenticated && token && user && user.id) {
             fetchFavorites();
         } else {
             console.log('Not authenticated or missing credentials');
             logout();
             navigate('/login');
-          }
+        }
     }, [isAuthenticated, token, user]);
 
     const fetchFavorites = async () => {
@@ -42,7 +44,7 @@ function Favorites() {
             console.log('Favorite response:', response.data);
             const productIds = response.data.favorites;
             console.log('Favorite product IDs:', productIds);
-            
+
             const productsResponse = await axios.post(`${API_URL}products/batch`, {
                 product_ids: productIds
             }, {
@@ -100,7 +102,7 @@ function Favorites() {
                                 }} className={`favorite-but ${favorites[favorite.id] ? 'in-favorites' : ''}`} />
                                 <div className='image-wrapper-favorites'>
                                     {favorite.image_name && (
-                                        <Card.Img variant="top" src={`${API_URL}static/products_image/${favorite.image_name}`} alt={favorite.name}/>
+                                        <Card.Img variant="top" src={`${API_URL}static/products_image/${favorite.image_name}`} alt={favorite.name} />
                                     )}
                                 </div>
                                 <Card.Body>

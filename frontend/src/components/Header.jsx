@@ -21,10 +21,9 @@ const Header = () => {
     const navigate = useNavigate();
     const [showMenuUser, setShowMenuUser] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // const [quantityCart, setQuantityCart] = useState(0);
 
-    /* console.log('isAuthenticated:', isAuthenticated);
-    console.log('user:', user); */
+    console.log('isAuthenticated:', isAuthenticated);
+    console.log('user:', user);
 
     useEffect(() => {
         if (isAuthenticated && token && user && user.id) {
@@ -33,23 +32,6 @@ const Header = () => {
             console.log('Not authenticated or missing credentials');
         }
     }, [isAuthenticated, token, user])
-
-    // const fetchCartQuantity = async () => {
-    //             try {
-    //             const response = await axios.get(`${API_URL}cart-user/${user.id}`, {
-    //                 headers: {
-    //                 Authorization: `Bearer ${token}`
-    //                 }
-    //             });
-    //             if('total_quantity' in response.data){
-    //                 setQuantityCart(response.data.total_quantity);
-    //             }
-    //             setError(null);
-    //             } catch (error) {
-    //             console.error('Error fetching cart data:', error);
-    //             setError('Произошла ошибка при загрузке данных корзины. Попробуйте обновить страницу.');
-    //             }
-    //         };
 
     const toggleSearch = () => {
         setIsSearchOpen(!isSearchOpen);

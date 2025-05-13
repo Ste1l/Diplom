@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { API_URL } from '../js/config';
 
@@ -14,12 +14,17 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const loadingRef = useRef(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
     if (storedToken && storedUser) {
-      checkAuth(storedToken, JSON.parse(storedUser));
+      checkAuth(storedToken, JSON.parse(storedUser)).finally(() => {
+        loadingRef.current = false;
+      });
+    } else {
+      loadingRef.current = false;
     }
     /* if (storedToken) {
       checkAuth(storedToken);
@@ -120,7 +125,7 @@ export const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, token, user, login, logout, isLoading: loadingRef.current }}>
       {children}
     </AuthContext.Provider>
   );

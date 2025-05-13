@@ -61,7 +61,7 @@ async def check_token(token: str = Depends(oauth2_scheme), db: Session = Depends
         return {"status": "success"}
     else:
         logger.error("Invalid token")
-        raise HTTPException(status_code=401, detail="Invalid token")\
+        raise HTTPException(status_code=401, detail="Invalid token")
         
 
 @app.get("/products")
