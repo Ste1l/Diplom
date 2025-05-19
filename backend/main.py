@@ -24,7 +24,8 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",
     "localhost:3000",
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
+    "http://localhost"
 ]
 
 app.add_middleware(
@@ -64,7 +65,7 @@ async def check_token(token: str = Depends(oauth2_scheme), db: Session = Depends
         raise HTTPException(status_code=401, detail="Invalid token")
         
 
-@app.get("/products")
+@app.get("/products/")
 async def read_products(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Product))
     products = result.scalars().all()

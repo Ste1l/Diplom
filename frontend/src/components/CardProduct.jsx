@@ -91,7 +91,8 @@ const ProductPage = () => {
 
             <div className="info_page_product">
                 <div className='image-container'>
-                    <img src={`${API_URL}static/products_image/${product.image_name}`} alt={product.name} />
+                    {/* <img src={`${API_URL}static/products_image/${product.image_name}`} alt={product.name} /> */}
+                    <img src={`/img/products_image/${product.image_name}`} alt={product.name} />
                 </div>
                 
 

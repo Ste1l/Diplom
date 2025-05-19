@@ -1,3 +1,4 @@
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
@@ -11,15 +12,20 @@ def mount_static(app: FastAPI):
     
 
     project_root = Path(__file__).parent.parent
-    UPLOAD_FOLDER = project_root  / "frontend" / "src" / "img" / "products_image"
-    # UPLOAD_FOLDER = project_root  / "build" / "img" / "products_image"
+    # UPLOAD_FOLDER = project_root  / "frontend" / "src" / "img" / "products_image"
+    UPLOAD_FOLDER = project_root  / "build" / "img" / "products_image"
 
     print(f"Файл существует: {os.path.exists(str(UPLOAD_FOLDER / 'calcium_glucinate.jpg'))}")
     
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
-    
-    app.mount("/static/products_image", StaticFiles(directory=str(UPLOAD_FOLDER), html=True, check_dir=False), name="products-image")
+    # app.mount("/static/products_image", StaticFiles(directory=str(UPLOAD_FOLDER)), html=True, check_dir=False name="products-image")
+    # app.mount("/static", StaticFiles(directory="/app/build/img/products_image/"), name="static")
+    app.mount(
+        "/static/products_image",
+        StaticFiles(directory=str(UPLOAD_FOLDER)),
+        name="products-image"
+    )
 
 def get_upload_folder():
     if UPLOAD_FOLDER is None:

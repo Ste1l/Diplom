@@ -116,7 +116,7 @@ function ProductCarousel() {
 
                   <div className='image-wrapper'>
                     {product.image_name && (
-                      <Card.Img variant="top" src={`${API_URL}static/products_image/${product.image_name}`} alt={product.name} />
+                      <Card.Img variant="top" src={`/img/products_image/${product.image_name}`} alt={product.name} />
                     )}
                   </div>
                   <Card.Body>

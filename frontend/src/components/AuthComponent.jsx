@@ -126,7 +126,7 @@ const AuthComponent = ({ onLogin, setErrorNotification }) => {
         </div>
         <button type="submit">Войти</button>
       </form>
-      <div className="registr">
+      <div className="registr mt-2 text-center">
         <p>У вас нет аккаунта? <Link to="/register">Зарегистрироваться</Link></p> 
       </div>
         </>

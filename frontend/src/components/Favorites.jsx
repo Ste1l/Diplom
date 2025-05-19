@@ -102,7 +102,8 @@ function Favorites() {
                                 }} className={`favorite-but ${favorites[favorite.id] ? 'in-favorites' : ''}`} />
                                 <div className='image-wrapper-favorites'>
                                     {favorite.image_name && (
-                                        <Card.Img variant="top" src={`${API_URL}static/products_image/${favorite.image_name}`} alt={favorite.name} />
+                                        // <Card.Img variant="top" src={`${API_URL}static/products_image/${favorite.image_name}`} alt={favorite.name} />
+                                        <Card.Img variant="top" src={`/img/products_image/${favorite.image_name}`} alt={favorite.name} />
                                     )}
                                 </div>
                                 <Card.Body>

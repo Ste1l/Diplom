@@ -82,7 +82,9 @@ const Orders = () => {
               <ul>
                 {order.items.map(item => (
                   <li key={item.product_id}>
-                    <img src={`${API_URL}static/products_image/${item.image_name}`} alt={item.name} />
+                    {/* <img src={`${API_URL}static/products_image/${item.image_name}`} alt={item.name} /> */}
+                    <img src={`/img/products_image/${item.image_name}`} alt={item.name} />
+                    
                     {item.name} x{item.quantity} - {item.price.toFixed(2)}
                   </li>
                 ))}

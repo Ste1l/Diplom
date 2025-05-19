@@ -72,7 +72,6 @@ input:not(:placeholder-shown) + .input-label{
 }
 
 .registr{
-    margin: 10px auto;
     display: flex;
     justify-content: center;
     align-items: center;

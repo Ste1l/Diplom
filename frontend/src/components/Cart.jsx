@@ -94,7 +94,8 @@ const Cart = () => {
                 <div key={item.product_id} className='cart-item'>
                   <div className='flex'>
                   <div className='product-image'>
-                    <img src={`http://127.0.0.1:8000/static/products_image/${item.image}`} alt="" />
+                    {/* <img src={`http://127.0.0.1:8000/static/products_image/${item.image}`} alt="" /> */}
+                    <img src={`/img/products_image/${item.image}`} alt={item.name} />
                   </div>
                   <div className='product-price'>
                     <p className='product-name'>{item.name}</p>

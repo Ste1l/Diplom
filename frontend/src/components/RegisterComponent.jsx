@@ -162,6 +162,10 @@ const RegisterComponent = () => {
             <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} onInput={handleInputChange} placeholder='' />
             <label className="input-label">Адрес</label>
         </div>
+        {/* <div className="d-flex gap-3 mb-2">
+            <input type="checkbox" placeholder='' required/>
+            <span className="">Даю согласие на обработку персональных данных в соответствии с <a href="#">политикой конфиденциальности</a></span>
+        </div> */}
         <button type="submit">Зарегистрироваться</button>
       </form>
     </div>

@@ -144,7 +144,8 @@ function SearchResultsPage() {
                                     }} className={`favorite-but ${favorites[product.id] ? 'in-favorites' : ''}`} />
                                     <div className='image-wrapper-search'>
                                         {product.image_name && (
-                                            <Card.Img variant="top" src={`${API_URL}static/products_image/${product.image_name}`} alt={product.name} />
+                                            // <Card.Img variant="top" src={`${API_URL}static/products_image/${product.image_name}`} alt={product.name} />
+                                            <Card.Img variant="top" src={`/img/products_image/${product.image_name}`} alt={product.name} />
                                         )}
                                     </div>
                                     <Card.Body>
