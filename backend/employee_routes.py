@@ -165,7 +165,9 @@ async def create_product_info(product_info: ProductInfoCreate, db: AsyncSession 
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
-
+from pathlib import Path  
+STATIC_FILES_PATH = os.getenv('STATIC_FILES_PATH', 'uploads')
+Path(STATIC_FILES_PATH).mkdir(exist_ok=True)
 
 @router1.post("/products")
 async def create_product(
@@ -191,10 +193,11 @@ async def create_product(
         )
 
         if image:
-            upload_folder = get_upload_folder()
-            check_upload_folder()
+            # upload_folder = get_upload_folder()
+            # check_upload_folder()
             filename = f"{uuid.uuid4()}.{image.filename.split('.')[-1]}"
-            file_path = os.path.join(upload_folder, filename)
+            # file_path = os.path.join(upload_folder, filename)
+            file_path = os.path.join(STATIC_FILES_PATH, filename)
             with open(file_path, "wb") as buffer:
                 buffer.write(await image.read())
             new_product.image_name = filename

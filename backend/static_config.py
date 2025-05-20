@@ -15,6 +15,7 @@ def mount_static(app: FastAPI):
     # UPLOAD_FOLDER = project_root  / "frontend" / "src" / "img" / "products_image"
     UPLOAD_FOLDER = project_root  / "build" / "img" / "products_image"
 
+
     print(f"Файл существует: {os.path.exists(str(UPLOAD_FOLDER / 'calcium_glucinate.jpg'))}")
     
     if not os.path.exists(UPLOAD_FOLDER):
