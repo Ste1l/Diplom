@@ -15,7 +15,7 @@ from auth.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_acc
 from auth.database import get_db
 from passlib.context import CryptContext # type: ignore
 import logging
-from static_config import mount_static
+# from static_config import mount_static
 
 
 
@@ -42,7 +42,7 @@ router = APIRouter()
 
 # Устанавливаем путь к статическим файлам
 """ app.mount("/static/products_image", StaticFiles(directory=os.path.join(project_root, ".", "frontend", "src", "img", "products_image")), name="products-image") """
-mount_static(app)
+# mount_static(app)
 
 
 

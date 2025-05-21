@@ -5,7 +5,7 @@ from schemas import CategoryCreate, ManufacturerCreate, ProductInfoCreate, Suppl
 from auth.database import get_db
 from sqlalchemy import select, insert, update # type: ignore
 from sqlalchemy.orm import selectinload # type: ignore
-from static_config import get_upload_folder, check_upload_folder
+# from static_config import get_upload_folder, check_upload_folder
 import os
 import logging
 from pydantic import BaseModel # type: ignore
@@ -167,7 +167,8 @@ async def create_product_info(product_info: ProductInfoCreate, db: AsyncSession 
     
 from pathlib import Path  
 STATIC_FILES_PATH = os.getenv('STATIC_FILES_PATH', 'uploads')
-Path(STATIC_FILES_PATH).mkdir(exist_ok=True)
+UPLOAD_FOLDER = Path(STATIC_FILES_PATH) / 'img' / 'products_image'
+UPLOAD_FOLDER.mkdir(exist_ok=True)
 
 @router1.post("/products")
 async def create_product(
@@ -197,7 +198,7 @@ async def create_product(
             # check_upload_folder()
             filename = f"{uuid.uuid4()}.{image.filename.split('.')[-1]}"
             # file_path = os.path.join(upload_folder, filename)
-            file_path = os.path.join(STATIC_FILES_PATH, filename)
+            file_path = UPLOAD_FOLDER / filename
             with open(file_path, "wb") as buffer:
                 buffer.write(await image.read())
             new_product.image_name = filename
