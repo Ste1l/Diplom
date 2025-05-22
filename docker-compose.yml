@@ -7,7 +7,7 @@ services:
     volumes:
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/logs:/var/log/nginx
-      # - ./frontend/static:/app/static
+      - ./frontend/static:/app/static
       - static_files:/usr/share/nginx/html/static/
     depends_on:
       - frontend
@@ -17,6 +17,7 @@ services:
       - app-network
 
   frontend:
+    image: ste1l/diplom-frontend:latest
     build: ./frontend
     ports:
       - "3000:3000"
@@ -25,12 +26,13 @@ services:
     volumes:
       - ./frontend:/app
       - node-modules:/app/node_modules
-      # - ./frontend/static:/app/static
+      - ./frontend/static:/app/static
       - static_files:/app/build/
     networks:
       - app-network
 
   backend:
+    image: ste1l/diplom-backend:latest
     build: ./backend
     ports:
       - "8000:80"

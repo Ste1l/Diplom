@@ -211,21 +211,21 @@ async def create_product(
         await db.rollback()
         raise HTTPException(status_code=500, detail="Error creating product")
     
-@router1.post("/upload-image")
-async def upload_image(image: UploadFile = File(...)):
-    try:
-        upload_folder = get_upload_folder()
-        check_upload_folder()
-        filename = f"{uuid.uuid4()}.{image.filename.split('.')[-1]}"
-        file_path = os.path.join(upload_folder, filename)
+# @router1.post("/upload-image")
+# async def upload_image(image: UploadFile = File(...)):
+#     try:
+#         upload_folder = get_upload_folder()
+#         check_upload_folder()
+#         filename = f"{uuid.uuid4()}.{image.filename.split('.')[-1]}"
+#         file_path = os.path.join(upload_folder, filename)
         
-        with open(file_path, "wb") as buffer:
-            buffer.write(await image.read())
+#         with open(file_path, "wb") as buffer:
+#             buffer.write(await image.read())
         
-        return JSONResponse(content={"filename": filename}, status_code=200)
-    except Exception as e:
-        logger.error(f"Error during file upload: {str(e)}")
-        raise HTTPException(status_code=500, detail="Error during file upload")
+#         return JSONResponse(content={"filename": filename}, status_code=200)
+#     except Exception as e:
+#         logger.error(f"Error during file upload: {str(e)}")
+#         raise HTTPException(status_code=500, detail="Error during file upload")
     
 
 @router1.get("/categories")

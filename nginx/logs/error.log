@@ -14,3 +14,7 @@
 2025/05/18 12:52:58 [emerg] 1#1: host not found in upstream "backend" in /etc/nginx/nginx.conf:27
 2025/05/18 12:53:04 [emerg] 1#1: host not found in upstream "backend" in /etc/nginx/nginx.conf:27
 2025/05/18 12:53:11 [emerg] 1#1: host not found in upstream "backend" in /etc/nginx/nginx.conf:27
+2025/05/22 15:35:51 [emerg] 1#1: host not found in upstream "frontend" in /etc/nginx/nginx.conf:11
+2025/05/22 15:35:56 [emerg] 1#1: host not found in upstream "frontend" in /etc/nginx/nginx.conf:11
+2025/05/22 15:36:01 [emerg] 1#1: host not found in upstream "frontend" in /etc/nginx/nginx.conf:11
+2025/05/22 15:36:05 [emerg] 1#1: host not found in upstream "frontend" in /etc/nginx/nginx.conf:11
