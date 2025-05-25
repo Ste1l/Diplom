@@ -17,7 +17,6 @@ services:
       - app-network
 
   frontend:
-    image: ste1l/diplom-frontend:latest
     build: ./frontend
     ports:
       - "3000:3000"
@@ -32,7 +31,6 @@ services:
       - app-network
 
   backend:
-    image: ste1l/diplom-backend:latest
     build: ./backend
     ports:
       - "8000:80"

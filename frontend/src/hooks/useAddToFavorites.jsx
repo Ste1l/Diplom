@@ -13,7 +13,7 @@ const useAddToFavorites = () => {
 
     const fetchFavorites = useCallback(async () => {
         try {
-            const response = await axios.get(`${API_URL}favorites/${user.id}`, {
+            const response = await axios.get(`${API_URL}main/favorites/${user.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -38,14 +38,14 @@ const useAddToFavorites = () => {
 
         try {
             if (favorites[productId]) {
-                await axios.delete(`${API_URL}favorites/remove`, {
+                await axios.delete(`${API_URL}main/favorites/remove`, {
                     params: { product_id: productId },
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
             } else {
-                await axios.post(`${API_URL}favorites/add`, {
+                await axios.post(`${API_URL}main/favorites/add`, {
                     product_id: productId
                 }, {
                     headers: {

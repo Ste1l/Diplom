@@ -74,7 +74,7 @@ const PaymentForm = () => {
       });
 
     try {
-      const response = await axios.post(`${API_URL}process-payment`, {
+      const response = await axios.post(`${API_URL}main/process-payment`, {
         user_id: user.id,
         cart_items: cartItems
       });

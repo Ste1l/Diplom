@@ -43,7 +43,7 @@ const Profile = () => {
         }
 
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axios.get(`${API_URL}profile/me`);
+        const response = await axios.get(`${API_URL}main/profile/me`);
         setUser(response.data);
         setIsAdmin(response.data.role_id === 2);
         setIsEmployee(response.data.role_id === 3);

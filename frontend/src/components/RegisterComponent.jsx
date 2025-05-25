@@ -55,7 +55,7 @@ const RegisterComponent = () => {
         return;
       }
 
-      const response = await axios.post(`${API_URL}register`, {
+      const response = await axios.post(`${API_URL}main/register`, {
         first_name: firstName,
         last_name: lastName,
         email: email,

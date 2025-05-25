@@ -35,7 +35,7 @@ function SearchResultsPage() {
     useEffect(() => {
         const fetchSearchResults = async () => {
             try {
-                const response = await axios.get(`${API_URL}products/search/${encodeURIComponent(query)}`);
+                const response = await axios.get(`${API_URL}main/products/search/${encodeURIComponent(query)}`);
                 setProducts(response.data.products);
             } catch (error) {
                 setError('Произошла ошибка при загрузке результатов поиска');

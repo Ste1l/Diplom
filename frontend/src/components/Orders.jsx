@@ -23,7 +23,7 @@ const Orders = () => {
           return;
         }
         
-        const response = await axios.get(`${API_URL}orders/${user.id}`, {
+        const response = await axios.get(`${API_URL}main/orders/${user.id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

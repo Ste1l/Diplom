@@ -27,7 +27,7 @@ const PasswordResetForm = ({
         isAuthorized: isAuthorized
       };
 
-      const response = await axios.post(`${API_URL}reset-password`, data);
+      const response = await axios.post(`${API_URL}main/reset-password`, data);
 
       if (response.status === 200) {
         onReset();

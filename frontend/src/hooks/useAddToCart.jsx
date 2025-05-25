@@ -14,7 +14,7 @@ const useAddToCart = () => {
     const fetchCartItems = useCallback(async () => {
 
         try {
-            const response = await axios.get(`${API_URL}cart/${user.id}`, {
+            const response = await axios.get(`${API_URL}main/cart/${user.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -42,7 +42,7 @@ const useAddToCart = () => {
         setError(null);
     
         try {
-            const response = await axios.post(`${API_URL}cart/add-item`, {
+            const response = await axios.post(`${API_URL}main/cart/add-item`, {
                 product_id: productId,
                 quantity: quantity
             }, {
@@ -63,7 +63,7 @@ const useAddToCart = () => {
     
     const removeFromCart = useCallback(async (productId) => {
         try {
-            await axios.delete(`${API_URL}cart/remove-item`, {
+            await axios.delete(`${API_URL}main/cart/remove-item`, {
                 params: { product_id: productId },
                 headers: {
                     Authorization: `Bearer ${token}`

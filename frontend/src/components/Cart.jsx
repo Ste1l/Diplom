@@ -37,7 +37,7 @@ const Cart = () => {
   const fetchCartData = async () => {
     try {
       /* console.log('Fetching cart data...'); */
-      const response = await axios.get(`${API_URL}cart-user/${user.id}`, {
+      const response = await axios.get(`${API_URL}main/cart-user/${user.id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

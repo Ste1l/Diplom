@@ -23,7 +23,7 @@ const ProductPage = () => {
     useEffect(() => {
         async function fetchProduct() {
             try {
-                const response = await axios.get(`${API_URL}products/${id}`);
+                const response = await axios.get(`${API_URL}main/products/${id}`);
                 console.log('Данные товара:', response.data);
                 setProduct(response.data);
                 setCount(1);

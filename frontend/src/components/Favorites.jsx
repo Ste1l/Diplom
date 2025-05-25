@@ -36,7 +36,7 @@ function Favorites() {
     const fetchFavorites = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`${API_URL}favorites/${user.id}`, {
+            const response = await axios.get(`${API_URL}main/favorites/${user.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -45,7 +45,7 @@ function Favorites() {
             const productIds = response.data.favorites;
             console.log('Favorite product IDs:', productIds);
 
-            const productsResponse = await axios.post(`${API_URL}products/batch`, {
+            const productsResponse = await axios.post(`${API_URL}main/products/batch`, {
                 product_ids: productIds
             }, {
                 headers: {

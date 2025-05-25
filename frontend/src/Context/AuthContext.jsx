@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const response = await axios.post(`${API_URL}token/check`, {}, {
+      const response = await axios.post(`${API_URL}main/token/check`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
