@@ -13,7 +13,7 @@ const SupplyItemAddForm = () => {
   useEffect(() => {
     const fetchSupplies = async () => {
       try {
-        const response = await axios.get(`${API_URL}api/supplies`);
+        const response = await axios.get(`${API_URL}emp/supplies`);
         setSupplies(response.data.supplies);
       } catch (err) {
         setError('Ошибка при загрузке списка поставок');
@@ -22,7 +22,7 @@ const SupplyItemAddForm = () => {
 
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`${API_URL}api/products`);
+        const response = await axios.get(`${API_URL}emp/products`);
         setProducts(response.data.products);
       } catch (err) {
         setError('Ошибка при загрузке списка товаров');
@@ -79,7 +79,7 @@ const SupplyItemAddForm = () => {
 
       try {
         const response = await axios.post(
-          `${API_URL}api/supplies/${selectedSupply}/items`,
+          `${API_URL}emp/supplies/${selectedSupply}/items`,
           supplyItems,
           {
             validateStatus: (status) => {

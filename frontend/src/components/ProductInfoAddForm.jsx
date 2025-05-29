@@ -21,7 +21,7 @@ const ProductInfoAddForm = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`${API_URL}api/products`);
+        const response = await axios.get(`${API_URL}emp/products`);
         setProducts(response.data.products);
       } catch (err) {
         setError('Ошибка при загрузке списка продуктов');
@@ -33,7 +33,7 @@ const ProductInfoAddForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}api/product_info`, {
+      const response = await axios.post(`${API_URL}emp/product_info`, {
         product_id: productId,
         composition,
         pharmacological_action,

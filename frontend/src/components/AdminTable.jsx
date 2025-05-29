@@ -39,7 +39,7 @@ const AdminTable = ({ tableName, endpoint }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API_URL}admin/${endpoint}/delete/${id}`);
+      await axios.delete(`${API_URL}main/admin/${endpoint}/delete/${id}`);
       const updatedData = data.filter(item => item.id !== id);
       setData(updatedData);
     } catch (err) {
@@ -71,7 +71,7 @@ const AdminTable = ({ tableName, endpoint }) => {
         Object.entries(formattedData).filter(([key]) => !['id', 'order_date', 'supply_date', 'added_at', 'registered_at'].includes(key))
       ); */
 
-      const response = await axios.post(`${API_URL}admin/${endpoint}/add`, {
+      const response = await axios.post(`${API_URL}main/admin/${endpoint}/add`, {
         endpoint: endpoint,
         data: formattedData
       });
@@ -147,7 +147,7 @@ const AdminTable = ({ tableName, endpoint }) => {
 
       console.log("Sending update data:", formattedData);
 
-      const response = await axios.put(`${API_URL}admin/${endpoint}/update/${selectedItem.id}`, {
+      const response = await axios.put(`${API_URL}main/admin/${endpoint}/update/${selectedItem.id}`, {
         endpoint: endpoint,
         data: formattedData
       });

@@ -15,7 +15,7 @@ function OrderReport() {
   const loadOrders = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}api/report_sales`, {
+      const response = await fetch(`${API_URL}emp/report_sales`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ function OrderReport() {
   const loadSupplies = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}api/report_supplies`, {
+      const response = await fetch(`${API_URL}emp/report_supplies`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -17,16 +17,10 @@ import logging
 
 router2 = APIRouter()
 
-
-
-@router2.get("/", tags=["root"])
-async def read_root() -> dict:
-    return {"message": "Welcome to your todo list."}
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-@router2.post("/token/check/", tags=["auth"])
+@router2.post("/token/check", tags=["auth"])
 async def check_token(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     logger.debug(f"Received token: {token}")
     current_user = get_current_user(token, db)
@@ -38,13 +32,13 @@ async def check_token(token: str = Depends(oauth2_scheme), db: Session = Depends
         raise HTTPException(status_code=401, detail="Invalid token")
         
 
-@router2.get("/products/")
+@router2.get("/products")
 async def read_products(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Product))
     products = result.scalars().all()
     return [ProductBase.from_orm(p).dict() for p in products]
 
-@router2.get("/products/{product_id}/")
+@router2.get("/products/{product_id}")
 async def read_product(product_id: int, db: AsyncSession = Depends(get_db)):
     stmt = select(Product, ProductInfo).options(
         selectinload(Product.manufacturer),
@@ -94,14 +88,14 @@ async def read_product(product_id: int, db: AsyncSession = Depends(get_db)):
 class ProductIds(BaseModel):
     product_ids: List[int]
 
-@router2.post("/products/batch/")
+@router2.post("/products/batch")
 async def get_products_batch(product_ids: ProductIds, db: AsyncSession = Depends(get_db)):
     stmt = select(Product).where(Product.id.in_(product_ids.product_ids))
     result = await db.execute(stmt)
     products = result.scalars().all()
     return {"products": [ProductBase.from_orm(p).dict() for p in products]}
 
-@router2.get("/products/search/{q}/")
+@router2.get("/products/search/{q}")
 async def search_products(q: str = Path(..., description="Search query"), db: AsyncSession = Depends(get_db)):
     sort_condition = case(
         (func.lower(Product.name).startswith(q.lower()), 1),
@@ -122,7 +116,7 @@ async def search_products(q: str = Path(..., description="Search query"), db: As
 # Регистрация
 pwd_context = CryptContext(schemes=["bcrypt"], default="bcrypt")
 
-@router2.post("/register/", status_code=status.HTTP_201_CREATED)
+@router2.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(register_data: RegisterUserData = Body(...), db: AsyncSession = Depends(get_db)):
     try:
         validated_data = RegisterUserData(**register_data.dict())
@@ -166,7 +160,7 @@ class TokenInvalidated(Exception):
 
 
 # Авторизация
-@router2.post("/login/", response_model=dict)
+@router2.post("/login", response_model=dict)
 async def login_for_access_token(login_data: LoginData, db: AsyncSession = Depends(get_db)):
     try:
         user = await authenticate_user(login_data.email, login_data.password, db)
@@ -193,7 +187,7 @@ async def login_for_access_token(login_data: LoginData, db: AsyncSession = Depen
     except HTTPException as http_error:
         raise http_error
 
-@router2.post("/logout/", status_code=status.HTTP_200_OK)
+@router2.post("/logout", status_code=status.HTTP_200_OK)
 async def logout(current_user: User = Depends(get_current_user), token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     try:
         # Очистить данные сессии
@@ -209,7 +203,7 @@ async def logout(current_user: User = Depends(get_current_user), token: str = De
 
 
 
-@router2.get("/profile/me/")
+@router2.get("/profile/me")
 async def read_current_user(current_user: User = Depends(get_current_user)):
     return {
         "id": current_user.id,
@@ -222,7 +216,7 @@ async def read_current_user(current_user: User = Depends(get_current_user)):
         "hashed_password": current_user.hashed_password
     }
 
-@router2.post("/reset-password/", status_code=status.HTTP_200_OK)
+@router2.post("/reset-password", status_code=status.HTTP_200_OK)
 async def reset_password(request: ResetPasswordRequest, db: Session = Depends(get_db)):
     if request.isAuthorized:
         current_user = await get_current_user(db, request.email)
@@ -261,7 +255,7 @@ async def reset_password(request: ResetPasswordRequest, db: Session = Depends(ge
 
 
 
-@router2.get("/cart-user/{user_id}/")
+@router2.get("/cart-user/{user_id}")
 async def get_user_cart(user_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     print(f"Getting cart for user {user_id}")
     
@@ -294,7 +288,7 @@ async def get_user_cart(user_id: int, current_user: User = Depends(get_current_u
     }
 
 
-@router2.get("/cart/{user_id}/")
+@router2.get("/cart/{user_id}")
 async def get_user_cart(user_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if user_id != current_user.id:
         raise HTTPException(
@@ -305,7 +299,7 @@ async def get_user_cart(user_id: int, current_user: User = Depends(get_current_u
     cart_items = await db.execute(select(CartItem).where(CartItem.user_id == user_id))
     return {"cart": [item.product_id for item in cart_items.scalars().all()]}
     
-@router2.post("/cart/add-item/", status_code=status.HTTP_201_CREATED)
+@router2.post("/cart/add-item", status_code=status.HTTP_201_CREATED)
 async def add_item_to_cart(
     cart_item: CartItemCreate,
     current_user: User = Depends(get_current_user),
@@ -342,7 +336,7 @@ async def add_item_to_cart(
     
     return {"message": f"Товар {product.name} успешно добавлен в корзину", "item": new_cart_item}
 
-@router2.delete("/cart/remove-item/")
+@router2.delete("/cart/remove-item")
 async def remove_item_from_cart(
     product_id: int,
     current_user: User = Depends(get_current_user),
@@ -356,13 +350,13 @@ async def remove_item_from_cart(
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Внутренняя ошибка сервера")
     
-@router2.delete("/cart/remove-items/{user_id}/")
+@router2.delete("/cart/remove-items/{user_id}")
 async def remove_all_items_from_cart(user_id: int, db: Session = Depends(get_db)):
     await db.execute(delete(CartItem).where(CartItem.user_id == user_id))
     await db.commit()
     return {"message": "Корзина очищена"}
     
-@router2.get("/favorites/{user_id}/")
+@router2.get("/favorites/{user_id}")
 async def get_user_favorites(user_id: int, current_user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     if user_id != current_user.id:
         raise HTTPException(
@@ -373,7 +367,7 @@ async def get_user_favorites(user_id: int, current_user: User = Depends(get_curr
     favorites = await db.execute(select(Favorite).where(Favorite.user_id == user_id))
     return {"favorites": [item.product_id for item in favorites.scalars().all()]}
 
-@router2.post("/favorites/add/", status_code=status.HTTP_201_CREATED)
+@router2.post("/favorites/add", status_code=status.HTTP_201_CREATED)
 async def add_to_favorites(
     favorite: FavoriteCreate,
     current_user: User = Depends(get_current_user),
@@ -400,7 +394,7 @@ async def add_to_favorites(
     
     return {"message": "Товар добавлен в избранное", "favorite": new_favorite}
 
-@router2.delete("/favorites/remove/")
+@router2.delete("/favorites/remove")
 async def remove_from_favorites(
     product_id: int,
     current_user: User = Depends(get_current_user),
@@ -421,7 +415,7 @@ async def remove_from_favorites(
     
     return {"message": "Товар удален из избранного"}
 
-@router2.get("/orders/{user_id}/", response_model=dict[str, List[OrderResponse]])
+@router2.get("/orders/{user_id}", response_model=dict[str, List[OrderResponse]])
 async def get_user_orders(user_id: int, db: AsyncSession = Depends(get_db), current_user: User = Depends(get_current_user)):
     if current_user.id != user_id:
         raise HTTPException(status_code=403, detail="You don't have permission to access this user's orders")
@@ -474,7 +468,7 @@ models = {
             "cart_items": CartItem,    
         }
 
-@router2.get("/admin/dashboard/", dependencies=[Depends(get_current_active_admin)])
+@router2.get("/admin/dashboard", dependencies=[Depends(get_current_active_admin)])
 async def read_admin_dashboard(current_admin: User = Depends(get_current_active_admin)):
     return {
         "message": f"Hello, {current_admin.email}! Welcome to the admin dashboard",
@@ -484,7 +478,7 @@ async def read_admin_dashboard(current_admin: User = Depends(get_current_active_
         "is_admin": current_admin.role_id == 2
     }
 
-@router2.post("/admin/{endpoint}/add/")
+@router2.post("/admin/{endpoint}/add")
 async def add_item(endpoint: str, item_data: AddItemRequest, db: AsyncSession = Depends(get_db)):
     try:
         model = models.get(endpoint.lower())
@@ -506,7 +500,7 @@ async def add_item(endpoint: str, item_data: AddItemRequest, db: AsyncSession = 
         await db.rollback()
         raise HTTPException(status_code=400, detail=f"Ошибка при добавлении записи: {str(e)}")
     
-@router2.delete("/admin/{endpoint}/delete/{item_id}/")
+@router2.delete("/admin/{endpoint}/delete/{item_id}")
 async def delete_item(endpoint: str, item_id: int, db: AsyncSession = Depends(get_db)):
     try:
         if endpoint not in models:
@@ -537,7 +531,7 @@ async def delete_item(endpoint: str, item_id: int, db: AsyncSession = Depends(ge
     
 
 
-@router2.put("/admin/{endpoint}/update/{item_id}/")
+@router2.put("/admin/{endpoint}/update/{item_id}")
 async def update_item(endpoint: str, item_id: int, item_data: AddItemRequest, db: AsyncSession = Depends(get_db)):
     try:
         print("Received endpoint:", endpoint)
@@ -587,7 +581,7 @@ async def update_item(endpoint: str, item_id: int, item_data: AddItemRequest, db
         print(f"Error updating record: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
 
-@router2.post("/process-payment/")
+@router2.post("/process-payment")
 async def process_payment(payment_data: dict, db: Session = Depends(get_db)):
     try:
         new_order = Order(

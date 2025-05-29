@@ -11,7 +11,7 @@ const SupplyAddForm = () => {
   useEffect(() => {
     const fetchManufacturers = async () => {
       try {
-        const response = await axios.get(`${API_URL}api/manufacturers`);
+        const response = await axios.get(`${API_URL}emp/manufacturers`);
         setManufacturers(response.data.manufacturers);
       } catch (err) {
         setError('Ошибка при загрузке списка производителей');
@@ -23,7 +23,7 @@ const SupplyAddForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post(`${API_URL}api/supplies/add`, {
+        const response = await axios.post(`${API_URL}emp/supplies/add`, {
             total_cost: totalCost,
             manufacturer_id: manufacturerId,
         });

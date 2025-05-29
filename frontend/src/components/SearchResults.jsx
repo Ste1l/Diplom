@@ -50,7 +50,7 @@ function SearchResultsPage() {
     useEffect(() => {
         const fetchManufacturers = async () => {
             try {
-                const response = await axios.get(`${API_URL}api/manufacturers`);
+                const response = await axios.get(`${API_URL}emp/manufacturers`);
                 setManufacturers(response.data.manufacturers);
             } catch (error) {
                 console.error('Ошибка при загрузке производителей:', error);

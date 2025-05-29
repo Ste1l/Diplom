@@ -22,7 +22,7 @@ const ProductAddForm = () => {
   useEffect(() => {
     const fetchManufacturers = async () => {
       try {
-        const response = await axios.get(`${API_URL}api/manufacturers`);
+        const response = await axios.get(`${API_URL}emp/manufacturers`);
         setManufacturers(response.data.manufacturers);
       } catch (err) {
         setError('Ошибка при загрузке списка производителей');
@@ -30,7 +30,7 @@ const ProductAddForm = () => {
     };
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${API_URL}api/categories`);
+        const response = await axios.get(`${API_URL}emp/categories`);
         setCategories(response.data.categories);
       } catch (err) {
         setError('Ошибка при загрузке списка категорий');
@@ -60,7 +60,7 @@ const ProductAddForm = () => {
       formData.append('manufacturer_id', manufacturerId);
       formData.append('category_id', categoryId);
 
-      const response = await axios.post(`${API_URL}api/products`, formData, {
+      const response = await axios.post(`${API_URL}emp/products`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

@@ -14,7 +14,7 @@ const ManufacturerAddForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}api/manufacturers`, {
+      const response = await axios.post(`${API_URL}emp/manufacturers`, {
         manufacturer_name: manufacturerName,
         address,
         phone_number: phoneNumber,

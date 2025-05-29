@@ -21,7 +21,7 @@ const AdminDashboard = () => {
       }
 
       try {
-        const response = await fetch(`${API_URL}admin/dashboard`, {
+        const response = await fetch(`${API_URL}main/admin/dashboard`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`

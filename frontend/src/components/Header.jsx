@@ -138,11 +138,11 @@ const Header = () => {
                             ) : (
                                 <TbMenu2 className='menu-open-button' onClick={toggleMenu} />
                             )} */}
-                            <div class="dropdown-menu-end">
-                                <button class="btn border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropdown-menu-end">
+                                <button className="btn border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <RxHamburgerMenu className='fs-1 color-toggle'/>
                                 </button>
-                                <ul class="dropdown-menu p-3">
+                                <ul className="dropdown-menu p-3">
                                     {!isAuthenticated && (
                                         <li className='my-1'>
                                             <Link to="/login" className="custom-link  d-flex align-items-center">

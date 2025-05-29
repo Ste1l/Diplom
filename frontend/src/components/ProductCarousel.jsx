@@ -21,7 +21,7 @@ function ProductCarousel() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch(`${API_URL}main/products/`);
+        const response = await fetch(`${API_URL}main/products`);
         const data = await response.json();
         setProducts(data);
       } catch (error) {

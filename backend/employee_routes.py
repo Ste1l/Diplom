@@ -28,7 +28,7 @@ router1 = APIRouter()
 
 logger = logging.getLogger(__name__)
 
-@router1.post("/categories/", status_code=status.HTTP_201_CREATED)
+@router1.post("/categories", status_code=status.HTTP_201_CREATED)
 async def create_category(category: CategoryCreate, db: AsyncSession = Depends(get_db)):
     try:
         new_category = Category(category_name=category.category_name)
@@ -40,7 +40,7 @@ async def create_category(category: CategoryCreate, db: AsyncSession = Depends(g
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-@router1.post("/manufacturers/", status_code=status.HTTP_201_CREATED)
+@router1.post("/manufacturers", status_code=status.HTTP_201_CREATED)
 async def create_manufacturer(manufacturer: ManufacturerCreate, db: AsyncSession = Depends(get_db)):
     try:
         new_manufacturer = Manufacturer(
@@ -59,7 +59,7 @@ async def create_manufacturer(manufacturer: ManufacturerCreate, db: AsyncSession
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
-@router1.post("/supplies/add/")
+@router1.post("/supplies/add")
 async def add_supply(supply: SupplyCreate, db: AsyncSession = Depends(get_db)):
     try:
         new_supply = Supply(
@@ -75,7 +75,7 @@ async def add_supply(supply: SupplyCreate, db: AsyncSession = Depends(get_db)):
         await db.rollback()
         raise HTTPException(status_code=400, detail=f"Ошибка при добавлении поставки: {str(e)}")
 
-@router1.post("/supplies/{supply_id}/items/")
+@router1.post("/supplies/{supply_id}/items")
 async def add_supply_items(
     supply_id: int,
     items: List[SupplyItemCreate],
@@ -140,7 +140,7 @@ async def add_supply_items(
         )
 
 
-@router1.post("/product_info/", status_code=status.HTTP_201_CREATED)
+@router1.post("/product_info", status_code=status.HTTP_201_CREATED)
 async def create_product_info(product_info: ProductInfoCreate, db: AsyncSession = Depends(get_db)):
     try:
         new_product_info = ProductInfo(
@@ -170,7 +170,7 @@ STATIC_FILES_PATH = os.getenv('STATIC_FILES_PATH', 'uploads')
 UPLOAD_FOLDER = Path(STATIC_FILES_PATH) / 'img' / 'products_image'
 UPLOAD_FOLDER.mkdir(exist_ok=True)
 
-@router1.post("/products/")
+@router1.post("/products")
 async def create_product(
     name: str = Form(...),
     description: str = Form(...),
@@ -193,14 +193,16 @@ async def create_product(
             category_id=category_id
         )
 
+        MAX_FILE_SIZE = 10 * 1024 * 1024
+
         if image:
-            # upload_folder = get_upload_folder()
-            # check_upload_folder()
+            contents = await image.read()
+            if len(contents) > MAX_FILE_SIZE:
+                raise HTTPException(status_code=413, detail="Файл слишком большой")
             filename = f"{uuid.uuid4()}.{image.filename.split('.')[-1]}"
-            # file_path = os.path.join(upload_folder, filename)
             file_path = UPLOAD_FOLDER / filename
             with open(file_path, "wb") as buffer:
-                buffer.write(await image.read())
+                buffer.write(contents)
             new_product.image_name = filename
 
         db.add(new_product)
@@ -228,7 +230,7 @@ async def create_product(
 #         raise HTTPException(status_code=500, detail="Error during file upload")
     
 
-@router1.get("/categories/")
+@router1.get("/categories")
 async def get_categories(db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Category))
@@ -237,7 +239,7 @@ async def get_categories(db: AsyncSession = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-@router1.get("/supplies/")
+@router1.get("/supplies")
 async def get_categories(db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Supply))
@@ -246,7 +248,7 @@ async def get_categories(db: AsyncSession = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
-@router1.get("/manufacturers/")
+@router1.get("/manufacturers")
 async def get_manufacturers(db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Manufacturer))
@@ -255,7 +257,7 @@ async def get_manufacturers(db: AsyncSession = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-@router1.get("/products/")
+@router1.get("/products")
 async def get_products(db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(Product))
@@ -264,7 +266,7 @@ async def get_products(db: AsyncSession = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-@router1.get("/product_info/")
+@router1.get("/product_info")
 async def get_product_info(db: AsyncSession = Depends(get_db)):
     try:
         result = await db.execute(select(ProductInfo))
@@ -475,7 +477,7 @@ class ReportFilter(BaseModel):
     start_date: datetime
     end_date: datetime
     
-@router1.post("/report_sales/")
+@router1.post("/report_sales")
 async def generate_sales_report(filter: ReportFilter, db: AsyncSession = Depends(get_db)):
     try:
         query = select(Order).options(
@@ -508,7 +510,7 @@ async def generate_sales_report(filter: ReportFilter, db: AsyncSession = Depends
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
-@router1.post("/report_supplies/")
+@router1.post("/report_supplies")
 async def generate_supplies_report(filter: ReportFilter, db: AsyncSession = Depends(get_db)):
     try:
         query = select(Supply).options(

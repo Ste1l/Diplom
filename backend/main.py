@@ -23,10 +23,11 @@ import logging
 app = FastAPI()
 
 origins = [
+    "*",
     "http://localhost:3000",
     "localhost:3000",
     "http://127.0.0.1:3000",
-    "http://localhost"
+    "http://localhost",
 ]
 
 app.add_middleware(
@@ -45,11 +46,13 @@ router = APIRouter()
 """ app.mount("/static/products_image", StaticFiles(directory=os.path.join(project_root, ".", "frontend", "src", "img", "products_image")), name="products-image") """
 # mount_static(app)
 
-
+@app.get("/", tags=["root"])
+async def read_root() -> dict:
+    return {"message": "Бэкенд работает"}
 
 
     
 app.include_router(main_router, prefix="/main", tags=["main"])
-app.include_router(employee_router, prefix="/api", tags=["api"])
+app.include_router(employee_router, prefix="/emp", tags=["emp"])
 app.include_router(admin_router, prefix="/admin", tags=["admin"])
 app.include_router(router)

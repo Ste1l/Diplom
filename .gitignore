@@ -12,3 +12,6 @@ frontend/build
 
 __pycache__/
 *.py[cod]
+nginx/logs/access.log
+nginx/logs/error.log
+backend/__pycache__/
